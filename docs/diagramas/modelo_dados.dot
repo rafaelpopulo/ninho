@@ -1,0 +1,56 @@
+digraph ER {
+  graph [splines=line, overlap=true, fontname="DejaVu Sans", bgcolor="white", pad=0.3];
+  node [shape=plain, fontname="DejaVu Sans", fontsize=10];
+  edge [color="#5B6B7F", fontname="DejaVu Sans", fontsize=9, fontcolor="#1B2A41", arrowhead=none];
+  Contacto [pos="110,300!", label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1B2A41">
+   <TR><TD BGCOLOR="#1B2A41"><FONT COLOR="white"><B>Contacto</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><U>id</U> PK</TD></TR>
+   <TR><TD ALIGN="LEFT">nome</TD></TR>
+   <TR><TD ALIGN="LEFT">parentesco</TD></TR>
+   <TR><TD ALIGN="LEFT">telefone (único)</TD></TR>
+   <TR><TD ALIGN="LEFT">foto_uri</TD></TR>
+   <TR><TD ALIGN="LEFT">criado_em</TD></TR></TABLE>>];
+  Registo [pos="430,430!", label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1B2A41">
+   <TR><TD BGCOLOR="#1B2A41"><FONT COLOR="white"><B>RegistoComunicacao</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><U>id</U> PK</TD></TR>
+   <TR><TD ALIGN="LEFT">contacto_id FK (nulo se desconhecido)</TD></TR>
+   <TR><TD ALIGN="LEFT">numero_externo (só se desconhecido)</TD></TR>
+   <TR><TD ALIGN="LEFT">tipo {chamada, sms}</TD></TR>
+   <TR><TD ALIGN="LEFT">direcao {enviada, recebida}</TD></TR>
+   <TR><TD ALIGN="LEFT">conteudo (texto do SMS)</TD></TR>
+   <TR><TD ALIGN="LEFT">bloqueado</TD></TR>
+   <TR><TD ALIGN="LEFT">data_hora</TD></TR></TABLE>>];
+  Familiar [pos="430,150!", label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1B2A41">
+   <TR><TD BGCOLOR="#1B2A41"><FONT COLOR="white"><B>PerfilFamiliar</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><U>id</U> PK</TD></TR>
+   <TR><TD ALIGN="LEFT">contacto_id FK (único)</TD></TR>
+   <TR><TD ALIGN="LEFT">pin_hash</TD></TR>
+   <TR><TD ALIGN="LEFT">pode_ver_registo</TD></TR>
+   <TR><TD ALIGN="LEFT">ativo</TD></TR></TABLE>>];
+  Config [pos="700,430!", label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1B2A41">
+   <TR><TD BGCOLOR="#0F9D8F"><FONT COLOR="white"><B>Configuracao</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><U>id</U> PK (registo único)</TD></TR>
+   <TR><TD ALIGN="LEFT">pin_hash</TD></TR>
+   <TR><TD ALIGN="LEFT">tentativas_falhadas</TD></TR>
+   <TR><TD ALIGN="LEFT">bloqueado_ate</TD></TR>
+   <TR><TD ALIGN="LEFT">quiosque_ativo</TD></TR></TABLE>>];
+  Func [pos="910,430!", label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1B2A41">
+   <TR><TD BGCOLOR="#0F9D8F"><FONT COLOR="white"><B>Funcionalidade</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><U>id</U> PK</TD></TR>
+   <TR><TD ALIGN="LEFT">nome {lanterna, calculadora,</TD></TR>
+   <TR><TD ALIGN="LEFT">        notas, camara}</TD></TR>
+   <TR><TD ALIGN="LEFT">ativa</TD></TR></TABLE>>];
+  Nota [pos="700,170!", label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1B2A41">
+   <TR><TD BGCOLOR="#0F9D8F"><FONT COLOR="white"><B>Nota</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><U>id</U> PK</TD></TR>
+   <TR><TD ALIGN="LEFT">titulo</TD></TR>
+   <TR><TD ALIGN="LEFT">texto</TD></TR>
+   <TR><TD ALIGN="LEFT">criada_em, alterada_em</TD></TR></TABLE>>];
+  Foto [pos="910,170!", label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1B2A41">
+   <TR><TD BGCOLOR="#0F9D8F"><FONT COLOR="white"><B>Fotografia</B></FONT></TD></TR>
+   <TR><TD ALIGN="LEFT"><U>id</U> PK</TD></TR>
+   <TR><TD ALIGN="LEFT">caminho_ficheiro</TD></TR>
+   <TR><TD ALIGN="LEFT">tirada_em</TD></TR></TABLE>>];
+  Contacto -> Registo [taillabel="0..1", headlabel="0..*", xlabel="regista"];
+  Contacto -> Familiar [taillabel="1", headlabel="0..1", xlabel="tem perfil"];
+}
